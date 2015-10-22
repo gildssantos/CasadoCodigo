@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="sce" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,6 +15,18 @@ table, th, td {
 <title>Casa do codigo</title>
 </head>
 <body>
+<sce:authorize access="isAuthenticated()"> 
+ <sce:authentication property="principal" var="user"/>
+   <div>Hello ${user.name}
+   </div>
+   
+      
+   <div>
+    <c:url value= "/logout" var="logoutUrl"/>
+	<a href="${logoutUrl}"> Logout </a>
+	</div>
+   
+</sce:authorize>
 	<h1>Casa do Código</h1>
 	<div>${sucesso}</div>
 	<div>

@@ -2,6 +2,7 @@
 
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<%@taglib prefix="sce" uri="http://www.springframework.org/security/tags" %>
 
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
@@ -19,6 +20,20 @@
 
 </head>
 <body>
+<sce:authorize access="isAuthenticated()"> 
+ <sce:authentication property="principal" var="user"/>
+   <div>Hello ${user.name}
+   </div>
+   
+   <div>
+    <c:url value= "/logout" var="logoutUrl"/>
+	<a href="${logoutUrl}"> Logout </a>
+	</div>
+</sce:authorize>
+
+
+
+
 	<h1>Cadastro Casa do Código</h1>
 	<c:url value="/products" var="url" />
 	
