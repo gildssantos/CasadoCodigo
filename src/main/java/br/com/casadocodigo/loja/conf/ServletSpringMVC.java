@@ -1,8 +1,11 @@
 package br.com.casadocodigo.loja.conf;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ServletSpringMVC extends
@@ -31,6 +34,17 @@ public class ServletSpringMVC extends
 	protected void customizeRegistration(Dynamic registration) {
 		// TODO Auto-generated method stub
 		registration.setMultipartConfig(new MultipartConfigElement(""));
+	}
+	
+	public void onStartup (ServletContext servletContext)
+		throws ServletException{
+		
+		super.onStartup(servletContext);
+		servletContext.addListener(RequestContextListener.class);
+		servletContext.setInitParameter("spring.profile.active", "dev");
+		
+		
+		
 	}
 
 }

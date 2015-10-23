@@ -2,9 +2,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="cdc" tagdir="/WEB-INF/tags" %>
-
-<cdc:page title="Listagem de Produtos">
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 
 <!DOCTYPE html>
@@ -25,8 +23,6 @@
 
 <c:url value="/shopping" var="shoppingCartUrl" />
 <body class="product">
-
-
 	<header id="layout-header">
 		<div class="clearfix container">
 			<a href="/" id="logo"></a>
@@ -34,7 +30,7 @@
 				<nav id="main-nav">
 					<ul class="clearfix">
 						<li>
-							<a href="${shoppingCartUrl}" rel="nofollow">Meu carrinho (${shoppingCart.quantity})</a>
+							<a href="${shoppingCartUrl}" rel="nofollow">Seu carrinho (${shoppingCart.quantity})</a>
 						</li>
 						<li>
 							<a href="/pages/sobre-a-casa-do-codigo" rel="nofollow">Sobre nós</a>
@@ -54,25 +50,25 @@
 				<a href="http://www.casadocodigo.com.br">Home</a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-agile"><spring:message code="navigation.category.agile"/></a>
+				<a href="/collections/livros-de-agile"> </a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-front-end"><spring:message code="navigation.category.front"/></a>
+				<a href="/collections/livros-de-front-end">Front End</a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-games"><spring:message code="navigation.category.games"/></a>
+				<a href="/collections/livros-de-games">Games</a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-java"><spring:message code="navigation.category.java"/></a>
+				<a href="/collections/livros-de-java">Java</a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-de-mobile"><spring:message code="navigation.category.mobile"/></a>
+				<a href="/collections/livros-de-mobile">Mobile</a>
 			</li>
 			<li class="category">
-				<a href="/collections/livros-desenvolvimento-web"><spring:message code="navigation.category.web"/></a>
+				<a href="/collections/livros-desenvolvimento-web">Web</a>
 			</li>
 			<li class="category">
-				<a href="/collections/outros"><spring:message code="navigation.category.others"/></a>
+				<a href="/collections/outros">Outros</a>
 			</li>
 		</ul>
 	</nav>
@@ -94,7 +90,7 @@
 		</header>
 		
 		<section class="buy-options clearfix">
-			<form:form servletRelativeAction="/shopping" method="post" class="container">
+			<form:form servletRelativeAction="/shopping" method="post" cssClass="container">
 				<input type="hidden" value="${product.id}" name="productId"/>
 				<ul id="variants" class="clearfix">
 					<c:forEach items="${product.prices}" var="price">
@@ -240,6 +236,5 @@
 			</div>
 		</div>
 	</footer>
-</cdc:page>
 </body>
 </html>

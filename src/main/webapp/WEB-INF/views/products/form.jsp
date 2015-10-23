@@ -1,84 +1,79 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="cdc" tagdir="/WEB-INF/tags" %>
 
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<cdc:page title="Listagem de Produtos">
 
-<%@taglib prefix="sce" uri="http://www.springframework.org/security/tags" %>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+	<h1>Casa do CÃ³digo</h1>
 
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cadastro: Casa do Código</title>
-
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-</head>
-<body>
-<sce:authorize access="isAuthenticated()"> 
- <sce:authentication property="principal" var="user"/>
-   <div>Hello ${user.name}
-   </div>
-   
-   <div>
-    <c:url value= "/logout" var="logoutUrl"/>
-	<a href="${logoutUrl}"> Logout </a>
-	</div>
-</sce:authorize>
-
-
-
-
-	<h1>Cadastro Casa do Código</h1>
-	<c:url value="/products" var="url" />
-	
-	
-	<form:form action="${spring:mvcUrl('PC#save').build()}" method="post" commandName="product" enctype="multipart/form-data">
+		<form:form action="${spring:mvcUrl('PC#save').build()}" method="post" commandName="product" enctype="multipart/form-data">
 		
-		<label for="title"> Título </label> 
-		<form:input path="title" name="title" type="text"/> 
-		<form:errors path="title"/>
-		
-		<br> 
-		
-		<label for="desc"> Descricao </label>
-		<form:textarea name="descricao" rows="5" cols="140" path="descricao" /> 
-		<form:errors path="descricao"/>
-		<br> 
-		
-		<label for="paginas"> Número de paginas </label> 
-		<form:input path="paginas" name="paginas" type="text"/>
-		<form:errors path="paginas"/> 
-		<br>
+		<label for="title">TÃ­tulo</label>
+		<form:input type="text" path="title" id="title"/>
+		<br/>
+		<form:errors path="title" cssStyle="color:red;"/>
 
-		<c:forEach items="${types}" var="bookType" varStatus="status">
-			<div>
-				<label for="price_${bookType}">${bookType}</label> 
-				<input type="text" name="prices[${status.index}].value" id="prices_${bookType }" /> 
-				<input type="hidden" name="prices[${status.index}].bookType" value="${bookType }" />
-			</div>
-		</c:forEach>
+		<br/>
+		<br/>
+
+		<label for="descricao" >DescriÃ§Ã£o</label>
+		<form:textarea rows="4" cols="50" path="descricao" id="descricao"/>
+		<br/>
+		<form:errors path="descricao" cssStyle="color:red;"/>
 		
-		<label for="releaseDate"> Data </label> 
-		<form:input path="releaseDate" name="releaseDate" type="text" id="releaseDate"/>
-		<form:errors path="releaseDate"/> 
-		<br>
-		
-		<label for="summary"> Súmario </label> 
+		<br/>
+		<br/>
+
+		<label for="paginas">NÃºmero de PÃ¡ginas</label>
+		<form:input type="text" path="paginas"/>
+		<br/>
+		<form:errors path="paginas" cssStyle="color:red;" />
+
+		<br/>
+		<br/>
+
+		<label for="releaseDate">Data LanÃ§amento</label>
+		<form:input type="text" path="releaseDate" name="releaseDate" id="releaseDate"/>
+		<br/>
+		<form:errors path="releaseDate" cssStyle="color:red;"/>
+
+		<br/>
+		<br/>
+
+		<div>
+			<c:forEach items="${types}" var="bookType" varStatus="status">
+				<div>
+					<label for="price_${bookType}">${bookType}</label> <form:input
+						type="text" path="prices[${status.index}].value"
+						id="price_${bookType}" /> <form:input type="hidden"
+						path="prices[${status.index}].bookType" value="${bookType}" />
+				</div>
+			</c:forEach>
+		</div>
+
+		<br/>
+		<br/>
+
+		<label for="summary">SumÃ¡rio</label>
 		<input type="file" name="summary" id="summary"/>
+		<form:errors path="summaryPath" cssStyle="color:red;"/>
 
-		<br> <input type="submit" value="Gravar" />
+		<br/>
+		<br/>
+		<br/>
 
-
+		<input type="submit" value="Enviar">
 	</form:form>
-<script>
-$('#releaseDate').datepicker({dateFormat : 'dd/mm/yy'});
-</script>
-
-</body>
-</html>
+	
+	<script>
+	  $("#releaseDate").datepicker({dateFormat:'dd/mm/yy'});
+	</script>
+	
+</cdc:page>

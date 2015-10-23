@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.concurrent.Callable;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 import br.com.casadocodigo.loja.dao.ProdutoDAO;
 import br.com.casadocodigo.loja.models.BookType;
@@ -62,8 +66,14 @@ public class ShoppingCartController {
 			String uriTopay = "http://book-payment.herokuapp.com/payment";
 
 			try {
-				String response = restTamplate.postForObject(uriTopay,
-						new PaymentData(total), String.class);
+
+				HttpHeaders hearders = new HttpHeaders();
+				hearders.setContentType(MediaType.APPLICATION_JSON);
+				HttpEntity<PaymentData> request = new HttpEntity<>(
+						new PaymentData(total), hearders);
+
+				String response = restTamplate.postForObject(uriTopay, request,
+						String.class);
 
 				System.out.println(response);
 				return "redirect:/products";
